@@ -9,7 +9,8 @@ defmodule RiotTakeHomeChallenge.Application do
   def start(_type, _args) do
     children = [
       RiotTakeHomeChallengeWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:riot_take_home_challenge, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:riot_take_home_challenge, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: RiotTakeHomeChallenge.PubSub},
       # Start a worker by calling: RiotTakeHomeChallenge.Worker.start_link(arg)
       # {RiotTakeHomeChallenge.Worker, arg},
