@@ -7,6 +7,9 @@ defmodule RiotTakeHomeChallengeWeb.Router do
 
   scope "/api", RiotTakeHomeChallengeWeb do
     pipe_through :api
+
+    post "/encrypt", EncryptionController, :encrypt
+    post "/decrypt", EncryptionController, :decrypt
   end
 
   # Enable LiveDashboard in development
