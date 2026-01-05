@@ -8,7 +8,9 @@
 import Config
 
 config :riot_take_home_challenge,
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  encryption_algorithm: :base64,
+  signature_algorithm: :hmac
 
 # Configures the endpoint
 config :riot_take_home_challenge, RiotTakeHomeChallengeWeb.Endpoint,
