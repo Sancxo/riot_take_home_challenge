@@ -10,7 +10,8 @@ defmodule RiotTakeHomeChallenge.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -26,7 +27,14 @@ defmodule RiotTakeHomeChallenge.MixProject do
 
   def cli do
     [
-      preferred_envs: [precommit: :test]
+      preferred_envs: [
+        precommit: :test,
+        quality: :test,
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -45,7 +53,10 @@ defmodule RiotTakeHomeChallenge.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:credo, "~> 1.7"},
+      {:sobelow, "~> 0.14.1", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18.5", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -58,7 +69,13 @@ defmodule RiotTakeHomeChallenge.MixProject do
   defp aliases do
     [
       setup: ["deps.get"],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"],
+      quality: [
+        "format --check-formatted",
+        "sobelow --config",
+        "coveralls",
+        "credo"
+      ]
     ]
   end
 end
