@@ -10,7 +10,7 @@ defmodule RiotTakeHomeChallengeWeb.EncryptionController do
       |> Enum.map(fn {k, v} -> {k, Encryption.encrypt!(v, @algorithm)} end)
       |> Map.new()
 
-    render(conn, :encrypt, payload: payload)
+    json(conn, payload)
   end
 
   def decrypt(conn, params) do
@@ -19,6 +19,6 @@ defmodule RiotTakeHomeChallengeWeb.EncryptionController do
       |> Enum.map(fn {k, v} -> {k, Encryption.decrypt!(v, @algorithm)} end)
       |> Map.new()
 
-    render(conn, :decrypt, payload: payload)
+    json(conn, payload)
   end
 end

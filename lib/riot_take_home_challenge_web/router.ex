@@ -10,6 +10,8 @@ defmodule RiotTakeHomeChallengeWeb.Router do
 
     post "/encrypt", EncryptionController, :encrypt
     post "/decrypt", EncryptionController, :decrypt
+    post "/sign", SignatureController, :sign
+    post "/verify", SignatureController, :verify
   end
 
   # Enable LiveDashboard in development

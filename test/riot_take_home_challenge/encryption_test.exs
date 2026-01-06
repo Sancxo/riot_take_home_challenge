@@ -7,8 +7,8 @@ defmodule RiotTakeHomeChallenge.EncryptionTest do
       assert Encryption.encrypt!("world", :base64) == "IndvcmxkIg=="
     end
 
-    test "raises UnavailableAlgorithm if algorithm is not supported" do
-      assert_raise Encryption.UnavailableAlgorithm, fn ->
+    test "raises UnavailableEncryptionAlgorithm if algorithm is not supported" do
+      assert_raise Encryption.UnavailableEncryptionAlgorithm, fn ->
         Encryption.encrypt!("world", :weird_algo)
       end
     end
@@ -27,8 +27,8 @@ defmodule RiotTakeHomeChallenge.EncryptionTest do
       assert Encryption.decrypt!(%{hello: "world"}, :base64) == %{hello: "world"}
     end
 
-    test "raises UnavailableAlgorithm if algorithm is not supported" do
-      assert_raise Encryption.UnavailableAlgorithm, fn ->
+    test "raises UnavailableEncryptionAlgorithm if algorithm is not supported" do
+      assert_raise Encryption.UnavailableEncryptionAlgorithm, fn ->
         Encryption.decrypt!("world", :weird_algo)
       end
     end

@@ -1,4 +1,4 @@
-defmodule RiotTakeHomeChallenge.Encoders.Base64 do
+defmodule RiotTakeHomeChallenge.Algorithms.Base64 do
   @moduledoc """
   Module to encode and decode data with the Base64 algorithm.
   """

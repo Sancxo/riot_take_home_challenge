@@ -8,18 +8,18 @@ defmodule RiotTakeHomeChallenge.Encryption do
     - base64
   """
 
-  alias RiotTakeHomeChallenge.Encoders
+  alias RiotTakeHomeChallenge.Algorithms
 
   @callback encrypt!(data :: binary()) :: binary()
   @callback decrypt!(data :: binary()) :: binary()
 
   @modules_registry %{
-    base64: Encoders.Base64
+    base64: Algorithms.Base64
   }
 
   @avalaible_algorithms_list Map.keys(@modules_registry)
 
-  defmodule UnavailableAlgorithm, do: defexception([:message])
+  defmodule UnavailableEncryptionAlgorithm, do: defexception([:message])
 
   @spec encrypt!(binary(), atom()) :: binary()
   @doc """
@@ -31,7 +31,7 @@ defmodule RiotTakeHomeChallenge.Encryption do
       "aGVsbG8="
 
       iex> encrypt!("hello", :wrong_algo)
-      ** (UnavailableAlgorithm)
+      ** (UnavailableEncryptionAlgorithm)
   """
   def encrypt!(data, algorithm) when algorithm in @avalaible_algorithms_list,
     do: @modules_registry[algorithm].encrypt!(data)
@@ -39,8 +39,8 @@ defmodule RiotTakeHomeChallenge.Encryption do
   def encrypt!(_data, algorithm),
     do:
       raise(
-        UnavailableAlgorithm,
-        "Encoder not found for #{algorithm} algorithm, here is a list of available encoders: #{inspect(@avalaible_algorithms_list)}"
+        UnavailableEncryptionAlgorithm,
+        "Encryption algorithm #{algorithm} not found to encrypt, here is a list of available algorithms: #{inspect(@avalaible_algorithms_list)}"
       )
 
   @doc """
@@ -52,7 +52,7 @@ defmodule RiotTakeHomeChallenge.Encryption do
       "hello"
 
       iex> decrypt!("aGVsbG8=", :wrong_algo)
-      ** (UnavailableAlgorithm)
+      ** (UnavailableEncryptionAlgorithm)
   """
 
   @spec decrypt!(binary(), atom()) :: binary()
@@ -62,7 +62,7 @@ defmodule RiotTakeHomeChallenge.Encryption do
   def decrypt!(_data, algorithm),
     do:
       raise(
-        UnavailableAlgorithm,
-        "Decoder not found for #{algorithm} algorithm, here is a list of available decoders: #{inspect(@avalaible_algorithms_list)}"
+        UnavailableEncryptionAlgorithm,
+        "Encryption algorithm #{algorithm} not found to decrypt, here is a list of available algorithms: #{inspect(@avalaible_algorithms_list)}"
       )
 end
